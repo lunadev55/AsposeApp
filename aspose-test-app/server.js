@@ -8,7 +8,7 @@ const app = express();
 app.use(express.static('./dist/app-heroku'));
 
 app.get('/*', (req, res) =>
-    res.sendFile('index.html', {root: '/dist/aspose-test-app/'}),
+    res.sendFile('index.html', {root: '/dist/aspose-test-app/src/'}),
 );
 
 // Start the app by listening on the default Heroku port
