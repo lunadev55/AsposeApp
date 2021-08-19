@@ -1,0 +1,60 @@
+<div class="container">
+  
+  <div class="container text-center" style="margin: 20px;">
+    <h3>Hey c:</h3>
+    <h4>This is a simple File Visualization App made with Angular, ASP.NET Core and <a href="https://www.aspose.com/" target="_blank">ASPOSE</a>!!!</h4>
+    <p>With this app you are able to View a range of different files as HTML, try it out!<br>- Supported extensions:</p>
+
+    <ol>
+      <li>TXT (Text)</li>
+      <li>PPTX (Presentation/Slides Microsoft PowerPoint)</li>
+      <li>DOCX (Microsoft Word Documents)</li>
+      <li>PDF (Portable Document Format) </li>
+      <li>XLS, XLSM, XLSX, XLSB... (Range of different excel types)</li>
+    </ol>
+
+    <!-- <button class="btn btn-primary" (click)="getFile()">Load File</button> -->
+
+    <div class="row" style="margin-bottom: 15px;">
+      <div class="col-md-12">
+        <input class="btn btn-success" type="file" #file placeholder="Choose file" (change)="uploadFile(file.files, undefined)" 
+          style="">
+        <!-- <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button> -->
+      </div>
+      <!-- <div class="col-md-4">
+        <span class="upload" *ngIf="progress > 0">
+          {{progress}}%
+        </span>
+        <span class="upload" *ngIf="message">
+          {{message}}
+        </span>
+      </div> -->
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div class="container text-center" style="margin: 20px;">
+    <!-- <app-tabs></app-tabs> -->
+    <!-- <button (click)="getExcelFileTabsNames()">tab</button> -->
+
+    <p *ngIf="fileName">You're currently viewing <b>{{ fileName }} </b></p>
+
+    <div *ngIf="tabListJson" style="background-color: darkgray;" class="container">
+        <div class="row">        
+            <!-- <div style="border:1px solid black;cursor: pointer;" *ngFor="let tabName of tabListJson" class="hover-effect col-sm" (click)="getClickedTab(tabName)"> {{ tabName }} </div> -->
+            <div style="border:1px solid black;cursor: pointer;" *ngFor="let tabName of tabListJson" class="hover-effect col-sm" (click)="uploadFile(file.files, tabName)"> {{ tabName }} </div>
+            <!-- <button *ngFor="let tabName of tabListJson" class="col-sm btn btn-info"> {{ tabName }}</button> -->
+        </div>
+    </div>
+    <hr>
+    <div [innerHtml]="content" class="container conteudo" style="width:70%; text-align: initial;" >
+      <!-- <img [src]="content" /> -->
+    </div>
+  </div>
+  
+  <!-- <div [innerHtml]="content" class="container conteudo" style="width:70%; text-align: initial;" >
+      <img [src]="content" />
+  </div> -->
+</div>

@@ -1,0 +1,16 @@
+.conteudo {
+    /* border: 1px;
+    border-style: solid;     */
+}
+
+div.hover-effect:hover {
+    /* background-color: brown; */
+    opacity: 0.5;
+}
+
+.upload {
+    font-weight: bold;
+    color: #28a745;
+    margin-left: 15px;
+    line-height: 36px;
+}
