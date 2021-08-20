@@ -16,9 +16,15 @@ import { HttpEventType } from '@angular/common/http';
 export class AppComponent {
   title = 'aspose-test-app';
 
-  urlRender = "https://localhost:44393/Home/RenderFile";
-  urlGetExcelTabsNames = "https://localhost:44393/Home/GetExcelTabsNames";
-  urlFileUpload = "https://localhost:44393/Home/Upload"
+  // urlRender = "https://localhost:44393/Home/RenderFile";
+  // urlGetExcelTabsNames = "https://localhost:44393/Home/GetExcelTabsNames";
+  // urlFileUpload = "https://localhost:44393/Home/Upload"
+
+  urlBase = "https://dotnetcore-aspose.herokuapp.com";
+
+  urlRender = this.urlBase + "/Home/RenderFile";
+  urlGetExcelTabsNames = this.urlBase + "/Home/GetExcelTabsNames";
+  urlFileUpload = this.urlBase + "/Home/Upload"
 
   content = "";
   mhtml = "";
@@ -27,6 +33,9 @@ export class AppComponent {
   tabListJson: any;
 
   fileName = "";
+  error = "";
+
+  spinner = false;
 
   test: any;
 
@@ -73,13 +82,20 @@ export class AppComponent {
     let fileToUpload = <File>files[0];
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    
+
     this.http.post(this.urlGetExcelTabsNames, formData).toPromise().then(data => {
+      this.spinner = false;
       this.tabListJson = data;
     });
   }
 
   public uploadFile = (files:any, tabName:any) => {
+    this.fileName = "";
+    // if (tabName === undefined) {
+      this.spinner = true;
+    // }
+
+    // this.spinner = true;
 
     this.content = "";
 
@@ -88,11 +104,19 @@ export class AppComponent {
 
     let fileToUpload = <File>files[0];
     const formData = new FormData();
-    formData.append('file', fileToUpload, fileToUpload.name);
-
-    
+    formData.append('file', fileToUpload, fileToUpload.name);    
 
     let fileExtension = fileToUpload.name.substring(fileToUpload.name.lastIndexOf('.'), fileToUpload.name.length);
+
+    if (fileExtension !== '.xls' && fileExtension !== '.xlsx' && fileExtension !== '.xlsm' && fileExtension !== '.xlsb'
+              && fileExtension != '.pdf' && fileExtension !== '.txt' && fileExtension !== '.pptx' && fileExtension !== '.docx') {
+      // this.getExcelFileTabsNames(files);
+      // if (tabName === undefined) {
+        this.spinner = false;
+      // }
+      this.error = "File Not Supported";      
+      return;
+    }
     
     if (fileExtension === '.xls' || fileExtension === '.xlsx' || fileExtension === '.xlsm' || fileExtension === '.xlsb') {
       this.getExcelFileTabsNames(files);
@@ -103,7 +127,10 @@ export class AppComponent {
     this.http.post(this.urlFileUpload + "?tabName=" + tabName, formData, {responseType: 'text'})
     .subscribe((data:any) => {
           this.fileName = fileToUpload.name;
-          this.content = "";
+          // if (tabName === undefined) {
+            this.spinner = false;
+          // }
+          this.content = "";          
           this.myHTML = this.sanitizer.bypassSecurityTrustHtml(data) as string;
           this.content = this.myHTML; 
     })

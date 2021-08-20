@@ -1,23 +1,25 @@
 <div class="container">
   
-  <div class="container text-center" style="margin: 20px;">
-    <h3>Hey c:</h3>
-    <h4>This is a simple File Visualization App made with Angular, ASP.NET Core and <a href="https://www.aspose.com/" target="_blank">ASPOSE</a>!!!</h4>
-    <p>With this app you are able to View a range of different files as HTML, try it out!<br>- Supported extensions:</p>
+  <div id="outer-div" class="container text-center">
+    <!-- <h3>Hey c:</h3> -->
+    <div style="border-style: groove; border-color: #b76b9a;">
+    <img id="logo"src="https://media-exp1.licdn.com/dms/image/C4E0BAQEP9HtvK4A6XA/company-logo_200_200/0/1625775207099?e=2159024400&v=beta&t=6Y0oz27LH7L1k7HqKd-V4ronBbckeArPes3Mot3LNac" alt="IA">
+    <h4 id="title">File Visualization App made with Angular, ASP.NET Core and <a href="https://www.aspose.com/" target="_blank">Aspose</a>.</h4>
+    <p>With this app you are able to View a range of different files as HTML, try it out!<br><br><h5><em>- <u>Supported file extensions:</u></em></h5></p>
 
-    <ol>
-      <li>TXT (Text)</li>
-      <li>PPTX (Presentation/Slides Microsoft PowerPoint)</li>
-      <li>DOCX (Microsoft Word Documents)</li>
-      <li>PDF (Portable Document Format) </li>
-      <li>XLS, XLSM, XLSX, XLSB... (Range of different excel types)</li>
-    </ol>
+    <ul>
+      <li><b>TXT</b> (Text)</li>
+      <li><b>PPTX</b> (Presentation/Slides Microsoft PowerPoint)</li>
+      <li><b>DOCX</b> (Microsoft Word Documents)</li>
+      <li><b>PDF</b> (Portable Document Format) </li>
+      <li><b>XLS, XLSM, XLSX, XLSB</b>... (Range of different excel types, including macros)</li>
+    </ul>
 
     <!-- <button class="btn btn-primary" (click)="getFile()">Load File</button> -->
 
     <div class="row" style="margin-bottom: 15px;">
       <div class="col-md-12">
-        <input class="btn btn-success" type="file" #file placeholder="Choose file" (change)="uploadFile(file.files, undefined)" 
+        <input class="btn btn-success" style="background-color: #b76b9a !important" type="file" #file placeholder="Choose file" (change)="uploadFile(file.files, undefined)" 
           style="">
         <!-- <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button> -->
       </div>
@@ -30,29 +32,41 @@
         </span>
       </div> -->
     </div>
+    <span style="color: red;font-size: 30px;" *ngIf="error">This file format is not supported.</span>
+  </div>
+    <hr *ngIf="fileName">
+    <div *ngIf="spinner" class="loader">Loading...</div>
+    <div *ngIf="fileName" style="border-style: groove; border-color: #b76b9a;">
+    <div class="container text-center" style="margin: 20px;">
+      <!-- <app-tabs></app-tabs> -->
+      <!-- <button (click)="getExcelFileTabsNames()">tab</button> -->
+  
+      <!-- <div class="row text-center" style="background-color: red; width: 50%;"> -->
+        <p style="font-size: 20px;margin:10px;" *ngIf="fileName">You're currently viewing <b style="color: #6758e6;"><u>{{ fileName }}</u></b></p>
+      <!-- </div> -->
+
+      <!-- <span style="color: red;" *ngIf="error">File Not Supported!!!</span> -->
+  
+      <div *ngIf="tabListJson" style="background-color: darkgray;" class="container">
+          <div class="row">        
+              <!-- <div style="border:1px solid black;cursor: pointer;" *ngFor="let tabName of tabListJson" class="hover-effect col-sm" (click)="getClickedTab(tabName)"> {{ tabName }} </div> -->
+              <div style="border:1px solid black;cursor: pointer;" *ngFor="let tabName of tabListJson" class="hover-effect col-sm" (click)="uploadFile(file.files, tabName)"> {{ tabName }} </div>
+              <!-- <button *ngFor="let tabName of tabListJson" class="col-sm btn btn-info"> {{ tabName }}</button> -->
+          </div>
+      </div>
+      <!-- <div *ngIf="spinner" class="loader">Loading...</div> -->
+      <div [innerHtml]="content" class="container conteudo" style="width:70%; text-align: initial;" >
+        <!-- <div class="loader">Loading...</div> -->
+        <!-- <img [src]="content" /> -->
+      </div>
+    </div>
+    </div>
 
   </div>
 
-  <hr>
+  <!-- <hr> -->
 
-  <div class="container text-center" style="margin: 20px;">
-    <!-- <app-tabs></app-tabs> -->
-    <!-- <button (click)="getExcelFileTabsNames()">tab</button> -->
-
-    <p *ngIf="fileName">You're currently viewing <b>{{ fileName }} </b></p>
-
-    <div *ngIf="tabListJson" style="background-color: darkgray;" class="container">
-        <div class="row">        
-            <!-- <div style="border:1px solid black;cursor: pointer;" *ngFor="let tabName of tabListJson" class="hover-effect col-sm" (click)="getClickedTab(tabName)"> {{ tabName }} </div> -->
-            <div style="border:1px solid black;cursor: pointer;" *ngFor="let tabName of tabListJson" class="hover-effect col-sm" (click)="uploadFile(file.files, tabName)"> {{ tabName }} </div>
-            <!-- <button *ngFor="let tabName of tabListJson" class="col-sm btn btn-info"> {{ tabName }}</button> -->
-        </div>
-    </div>
-    <hr>
-    <div [innerHtml]="content" class="container conteudo" style="width:70%; text-align: initial;" >
-      <!-- <img [src]="content" /> -->
-    </div>
-  </div>
+ 
   
   <!-- <div [innerHtml]="content" class="container conteudo" style="width:70%; text-align: initial;" >
       <img [src]="content" />
